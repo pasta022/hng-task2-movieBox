@@ -79,6 +79,7 @@ const FeatureMovies = () => {
                 release={m.release_date}
                 id={m.id}
                 ranking={index + 1}
+                data-testid="movie-card"
               />
             ))
           )}

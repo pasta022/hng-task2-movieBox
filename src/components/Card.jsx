@@ -51,10 +51,13 @@ const Card = ({ poster, title, release, ranking }) => {
           <Poster
             src={`https://image.tmdb.org/t/p/w500${poster}`}
             alt="movie poster"
+            data-testid="movie-poster"
           />
         </PosterContainer>
-        <Title>{title}</Title>
-        <ReleaseDate>Release Date: {release}</ReleaseDate>
+        <Title data-testid="movie-title">{title}</Title>
+        <ReleaseDate data-testid="movie-release-date">
+          Release Date: {release}
+        </ReleaseDate>
       </Container>
     </>
   );

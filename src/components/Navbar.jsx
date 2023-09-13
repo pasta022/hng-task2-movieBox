@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../assets/Logo.svg";
 import menu from "../assets/Menu.svg";
+import { Link, useLocation } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -24,13 +25,19 @@ const LeftImg = styled.img`
   height: 36px;
 `;
 
-const LeftText = styled.h3``;
+const LeftText = styled.h3`
+  color: white;
+`;
+
 const Center = styled.div`
   width: 300px;
   height: 30px;
+  display: flex;
+  align-items: center;
 `;
 
 const SearchContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,25 +75,63 @@ const RightImg = styled.img`
   margin-right: 5px;
 `;
 
+const NavbarMovie = styled.div`
+  color: white;
+  background-color: #1f1f1f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+`;
+
 const Navbar = () => {
+  const location = useLocation();
+
   return (
     <>
-      <Container>
-        <Left>
-          <LeftImg src={logo} alt="moviebox logo" />
-          <LeftText>MovieBox</LeftText>
-        </Left>
-        <Center>
-          <SearchContainer>
-            <SearchInput placeholder="What do you want to watch?" />
-            <Search />
-          </SearchContainer>
-        </Center>
-        <Right>
-          <RightText>Sign In</RightText>
-          <RightImg src={menu} alt="menuImg" />
-        </Right>
-      </Container>
+      {location.pathname === "/" ? (
+        <Container>
+          <Left>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <LeftImg src={logo} alt="moviebox logo" />
+            </Link>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <LeftText>MovieBox</LeftText>{" "}
+            </Link>
+          </Left>
+          <Center>
+            <SearchContainer>
+              <SearchInput placeholder="What do you want to watch?" />
+              <Search />
+            </SearchContainer>
+          </Center>
+          <Right>
+            <RightText>Sign In</RightText>
+            <RightImg src={menu} alt="menuImg" />
+          </Right>
+        </Container>
+      ) : (
+        <NavbarMovie>
+          <Left>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <LeftImg src={logo} alt="moviebox logo" />
+            </Link>
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <LeftText>MovieBox</LeftText>{" "}
+            </Link>
+          </Left>
+          <Center>
+            <SearchContainer>
+              <SearchInput placeholder="What do you want to watch?" />
+              <Search />
+            </SearchContainer>
+          </Center>
+          <Right>
+            <RightText>Sign In</RightText>
+            <RightImg src={menu} alt="menuImg" />
+          </Right>
+        </NavbarMovie>
+      )}
     </>
   );
 };
