@@ -1,9 +1,9 @@
-import { Search } from "@mui/icons-material";
 import React from "react";
 import styled from "styled-components";
 import logo from "../assets/Logo.svg";
 import menu from "../assets/Menu.svg";
 import { Link, useLocation } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const Container = styled.div`
   display: flex;
@@ -34,31 +34,6 @@ const Center = styled.div`
   height: 30px;
   display: flex;
   align-items: center;
-`;
-
-const SearchContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
-  border: 2px solid;
-  border-radius: 5px;
-`;
-
-const SearchInput = styled.input`
-  width: 85%;
-  border: none;
-  background-color: transparent;
-  color: white;
-
-  &:focus {
-    outline: none;
-  }
-
-  &::placeholder {
-    color: white;
-  }
 `;
 
 const Right = styled.div`
@@ -100,10 +75,7 @@ const Navbar = () => {
             </Link>
           </Left>
           <Center>
-            <SearchContainer>
-              <SearchInput placeholder="What do you want to watch?" />
-              <Search />
-            </SearchContainer>
+            <SearchBar />
           </Center>
           <Right>
             <RightText>Sign In</RightText>
@@ -121,10 +93,7 @@ const Navbar = () => {
             </Link>
           </Left>
           <Center>
-            <SearchContainer>
-              <SearchInput placeholder="What do you want to watch?" />
-              <Search />
-            </SearchContainer>
+            <SearchBar />
           </Center>
           <Right>
             <RightText>Sign In</RightText>
