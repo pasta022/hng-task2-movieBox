@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import { Circle, PlayCircleFilledWhiteTwoTone } from "@mui/icons-material";
+import Error from "./Error";
 
 const Div = styled.div`
   margin: 0;
   padding: 0;
 `;
+const MovieContainer = styled.div``;
 
 const Container = styled.div`
   padding: 20px;
@@ -75,9 +77,11 @@ const OverviewText = styled.div`
 `;
 
 const Movie = () => {
+  //component variables
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [tmdbMovie, setTmbdMovie] = useState(null);
+  const [error, setError] = useState(false);
 
   //api info
   const apiKey = "3685919de6d6123451bc68adcb6632df";
@@ -98,6 +102,7 @@ const Movie = () => {
         setMovie(...res.data.movie_results);
       } catch (error) {
         console.log(error);
+        setError(true);
       }
     };
 
@@ -105,6 +110,7 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
+    //occurs when movie variable is truthy
     if (movie) {
       const getTmbdMovie = async () => {
         try {
@@ -128,34 +134,48 @@ const Movie = () => {
     <>
       <Div>
         <Navbar />
-        {movie && (
-          <Container>
-            <Trailer>
-              <TrailerImg
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-              />
-              <PlayIcon>
-                <PlayCircleFilledWhiteTwoTone
-                  htmlColor="white"
-                  sx={{ fontSize: 120 }}
-                />
-              </PlayIcon>
-            </Trailer>
-            <Info>
-              <Details>
-                <Title>{movie.title}</Title>
-                <Circle sx={{ fontSize: 10 }} htmlColor="grey" />
-                <ReleaseDate>{movie.release_date}</ReleaseDate>
-                <Circle sx={{ fontSize: 10 }} htmlColor="grey" />
-                {tmdbMovie && <Runtime>{tmdbMovie.runtime} minutes</Runtime>}
-              </Details>
-              <OverviewContainer>
-                <OverviewTitle>Synopsis: </OverviewTitle>
-                <OverviewText>{movie.overview}</OverviewText>
-              </OverviewContainer>
-            </Info>
-          </Container>
+        {error ? (
+          <Error message="Sorry!. An error occured fetching data..." />
+        ) : (
+          <MovieContainer>
+            {movie && (
+              <Container>
+                <Trailer>
+                  <TrailerImg
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                  />
+                  <PlayIcon>
+                    <PlayCircleFilledWhiteTwoTone
+                      htmlColor="white"
+                      sx={{ fontSize: 120 }}
+                    />
+                  </PlayIcon>
+                </Trailer>
+                <Info>
+                  <Details>
+                    <Title data-testid="movie-title">{movie.title}</Title>
+                    <Circle sx={{ fontSize: 10 }} htmlColor="grey" />
+                    <ReleaseDate data-testid="movie-release-date">
+                      {movie.release_date}
+                    </ReleaseDate>
+                    <Circle sx={{ fontSize: 10 }} htmlColor="grey" />
+                    {tmdbMovie && (
+                      <Runtime data-testid="movie-runtime">
+                        {tmdbMovie.runtime} minutes
+                      </Runtime>
+                    )}
+                  </Details>
+                  <OverviewContainer>
+                    <OverviewTitle>Synopsis: </OverviewTitle>
+                    <OverviewText data-testid="movie-overview">
+                      {movie.overview}
+                    </OverviewText>
+                  </OverviewContainer>
+                </Info>
+              </Container>
+            )}
+          </MovieContainer>
         )}
       </Div>
     </>

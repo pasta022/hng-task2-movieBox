@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Result from "./Result";
 import { Link } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
+import Error from "./Error";
 
 // const Container = styled.div`
 //   width: 100%;
@@ -45,6 +46,7 @@ const SearchIcon = styled.div`
 const ResultsDropDown = styled.div`
   position: absolute;
   width: 600px;
+  min-height: 100px;
   max-height: 400px;
   top: 100%;
   left: 50%;
@@ -58,11 +60,11 @@ const ResultsDropDown = styled.div`
   border-radius: 20px;
 `;
 
-const Loader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// const Loader = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 const ResultItems = styled.div``;
 
@@ -80,6 +82,8 @@ const StyledCancelIcon = styled(Cancel)`
   color: grey;
 `;
 
+const ResultItem = styled.div``;
+
 // const More = styled.div`
 //   display: flex;
 //   align-items: center;
@@ -96,33 +100,39 @@ const StyledCancelIcon = styled(Cancel)`
 // `;
 
 const SearchBar = () => {
+  //Component States
   const [query, setQuery] = useState("");
   const [dropDown, setDropDown] = useState(false);
   // const [results, setResults] = useState([]);
   const [dropDownResults, setDropDownResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [resultLoading, setResultLoading] = useState(true);
+  // const [resultLoading, setResultLoading] = useState(true);
+  const [error, setError] = useState(false);
   // const resDataResults = useRef(null);
 
+  //Api links
   const baseURL = "https://api.themoviedb.org";
   const endPoint = "/3/search/movie";
   const apiKey = "3685919de6d6123451bc68adcb6632df";
 
+  //handle search icon click
   const handleButtonClick = () => {
     setButtonClicked(true);
   };
 
+  //handle cancel icon click
   const handleCancel = () => {
     setDropDown(false);
   };
 
   useEffect(() => {
+    //occurs when button is clicked
     if (buttonClicked) {
       const getMovie = async () => {
         setDropDown(false);
         setLoading(true);
-        setResultLoading(true);
+        // setResultLoading(true);
         try {
           const res = await axios.get(`${baseURL}${endPoint}`, {
             params: {
@@ -139,10 +149,13 @@ const SearchBar = () => {
           setTimeout(() => {
             setDropDown(true);
             setLoading(false);
-            setResultLoading(false);
+            // setResultLoading(false);
           }, 3000);
         } catch (error) {
           console.log(error);
+          setDropDown(true);
+          setLoading(false);
+          setError(true);
         }
       };
 
@@ -169,19 +182,18 @@ const SearchBar = () => {
         </SearchIcon>
         {dropDown && (
           <ResultsDropDown>
-            {resultLoading ? (
-              <Loader>
-                <TailSpin height="60" width="60" color="#3f3f3f" radius="1" />
-              </Loader>
-            ) : (
-              <ResultItems>
-                <CancelIcon onClick={handleCancel}>
-                  <StyledCancelIcon />
-                </CancelIcon>
-                {dropDownResults.map((dd, index) => (
-                  <Result key={index} result={dd} />
-                ))}
-                {/* {resDataResults.current && (
+            <ResultItems>
+              <CancelIcon onClick={handleCancel}>
+                <StyledCancelIcon />
+              </CancelIcon>
+              {error ? (
+                <Error message="Sorry!. An error occured fetching data..." />
+              ) : (
+                <ResultItem>
+                  {dropDownResults.map((dd, index) => (
+                    <Result key={index} result={dd} />
+                  ))}
+                  {/* {resDataResults.current && (
                   <Link
                     to={{
                       pathname: "/searchResults",
@@ -197,8 +209,9 @@ const SearchBar = () => {
                     </More>
                   </Link>
                 )} */}
-              </ResultItems>
-            )}
+                </ResultItem>
+              )}
+            </ResultItems>
           </ResultsDropDown>
         )}
       </SearchContainer>

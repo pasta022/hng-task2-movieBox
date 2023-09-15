@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Homepage from './pages/Homepage'
 import Movies from './pages/Movies'
-import SearchResults from './pages/SearchResults'
+// import SearchResults from './pages/SearchResults'
 
 
 const App = () => {

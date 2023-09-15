@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "./Card";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
+import Error from "./Error";
 
 const Container = styled.div`
   padding: 50px;
@@ -34,6 +35,7 @@ const FeatureMovies = () => {
   //component state
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchTopMovies = async () => {
@@ -53,7 +55,10 @@ const FeatureMovies = () => {
         }, 2000);
       } catch (error) {
         console.log(error);
-        setLoading(false);
+        setError(true);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       }
     };
 
@@ -65,25 +70,29 @@ const FeatureMovies = () => {
     <>
       <Container>
         <Title>Popular Movies</Title>
-        <CardContainer>
-          {loading ? (
-            <LoaderContainer>
-              <TailSpin height="80" width="80" color="#9c9c9c" radius="1" />
-            </LoaderContainer>
-          ) : (
-            movies.map((m, index) => (
-              <Card
-                key={index}
-                poster={m.poster_path}
-                title={m.title}
-                release={m.release_date}
-                id={m.id}
-                ranking={index + 1}
-                data-testid="movie-card"
-              />
-            ))
-          )}
-        </CardContainer>
+        {error ? (
+          <Error message="Sorry!. An error occured fetching data..." />
+        ) : (
+          <CardContainer>
+            {loading ? (
+              <LoaderContainer>
+                <TailSpin height="80" width="80" color="#9c9c9c" radius="1" />
+              </LoaderContainer>
+            ) : (
+              movies.map((m, index) => (
+                <Card
+                  key={index}
+                  poster={m.poster_path}
+                  title={m.title}
+                  release={m.release_date}
+                  id={m.id}
+                  ranking={index + 1}
+                  data-testid="movie-card"
+                />
+              ))
+            )}
+          </CardContainer>
+        )}
       </Container>
     </>
   );
