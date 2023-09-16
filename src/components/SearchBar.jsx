@@ -109,7 +109,6 @@ const SearchBar = () => {
   //Component States
   const [query, setQuery] = useState("");
   const [dropDown, setDropDown] = useState(false);
-  // const [results, setResults] = useState([]);
   const [dropDownResults, setDropDownResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
