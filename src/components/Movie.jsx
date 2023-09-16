@@ -101,6 +101,7 @@ const Movie = () => {
   const endPoint2 = "/3/movie/";
 
   useEffect(() => {
+    //function to get movie
     const getMovie = async () => {
       try {
         const res = await axios.get(`${baseURL}${endPoint1}${id}`, {
@@ -117,6 +118,7 @@ const Movie = () => {
       }
     };
 
+    //call function
     getMovie();
   }, [id]);
 
@@ -137,12 +139,14 @@ const Movie = () => {
         }
       };
 
+      //call function
       getTmbdMovie();
     }
   }, [movie]);
 
   useEffect(() => {
     if (movie) {
+      //function to get release date in UTC
       const getUTCTime = () => {
         setReleaseDate(movie.release_date);
         const dates = releaseDate.split("-");
@@ -158,6 +162,7 @@ const Movie = () => {
         }
       };
 
+      //call function
       getUTCTime();
     }
   }, [movie, releaseDate]);

@@ -172,6 +172,7 @@ const SearchBar = () => {
         }
       };
 
+      //make sure search query is not empty
       query ? getMovie() : setError(true);
 
       setTimeout(() => setButtonClicked(false), 2000);

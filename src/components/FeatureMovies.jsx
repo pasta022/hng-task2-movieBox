@@ -38,6 +38,7 @@ const FeatureMovies = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    //function to get movies
     const fetchTopMovies = async () => {
       try {
         setLoading(true);
@@ -50,6 +51,7 @@ const FeatureMovies = () => {
         });
         setMovies(res.data.results.slice(0, 10));
 
+        //Timeout to wait for api request
         setTimeout(() => {
           setLoading(false);
         }, 2000);
