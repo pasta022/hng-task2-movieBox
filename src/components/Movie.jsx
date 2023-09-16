@@ -97,21 +97,21 @@ const Movie = () => {
   //api info
   const apiKey = "3685919de6d6123451bc68adcb6632df";
   const baseURL = "https://api.themoviedb.org";
-  const endPoint1 = "/3/find/";
+  // const endPoint1 = "/3/find/";
   const endPoint2 = "/3/movie/";
 
   useEffect(() => {
     //function to get movie
     const getMovie = async () => {
       try {
-        const res = await axios.get(`${baseURL}${endPoint1}${id}`, {
+        const res = await axios.get(`${baseURL}${endPoint2}${id}`, {
           params: {
             api_key: apiKey,
             language: "en-US",
-            external_source: "imdb_id",
+            // external_source: "imdb_id",
           },
         });
-        setMovie(...res.data.movie_results);
+        setMovie(res.data);
       } catch (error) {
         console.log(error);
         setError(true);
@@ -197,11 +197,9 @@ const Movie = () => {
                       {utcDate}
                     </ReleaseDate>
                     <Circle sx={{ fontSize: 10 }} htmlColor="grey" />
-                    {tmdbMovie && (
-                      <Runtime data-testid="movie-runtime">
-                        {tmdbMovie.runtime} minutes
-                      </Runtime>
-                    )}
+                    <Runtime data-testid="movie-runtime">
+                      {movie.runtime} minutes
+                    </Runtime>
                   </Details>
                   <OverviewContainer>
                     <OverviewTitle>Synopsis: </OverviewTitle>
