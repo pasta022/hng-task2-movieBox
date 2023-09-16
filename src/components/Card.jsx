@@ -5,6 +5,7 @@ const Container = styled.div`
   margin-bottom: 20px;
   flex: 1;
   box-sizing: border-box;
+  max-width: 270px;
 `;
 
 const PosterContainer = styled.div`

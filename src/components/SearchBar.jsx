@@ -204,7 +204,12 @@ const SearchBar = () => {
               ) : (
                 <ResultItem>
                   {dropDownResults.map((dd, index) => (
-                    <Result key={index} result={dd} />
+                    <Link
+                      to={`movies/${dd.id}`}
+                      style={{ textDecoration: "none", color: "#3c3c3c" }}
+                    >
+                      <Result key={index} result={dd} />
+                    </Link>
                   ))}
                   {/* {resDataResults.current && (
                   <Link

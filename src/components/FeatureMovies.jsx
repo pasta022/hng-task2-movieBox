@@ -4,6 +4,7 @@ import Card from "./Card";
 import axios from "axios";
 import { TailSpin } from "react-loader-spinner";
 import Error from "./Error";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   padding: 50px;
@@ -16,7 +17,9 @@ const Title = styled.h2`
 const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  /* gap: 10px; */
   position: relative;
+  justify-content: space-evenly;
 `;
 
 const LoaderContainer = styled.div`
@@ -82,15 +85,20 @@ const FeatureMovies = () => {
               </LoaderContainer>
             ) : (
               movies.map((m, index) => (
-                <Card
-                  key={index}
-                  poster={m.poster_path}
-                  title={m.title}
-                  release={m.release_date}
-                  id={m.id}
-                  ranking={index + 1}
-                  data-testid="movie-card"
-                />
+                <Link
+                  to={`movies/${m.id}`}
+                  style={{ textDecoration: "none", color: "#1f1f1f" }}
+                >
+                  <Card
+                    key={index}
+                    poster={m.poster_path}
+                    title={m.title}
+                    release={m.release_date}
+                    id={m.id}
+                    ranking={index + 1}
+                    data-testid="movie-card"
+                  />
+                </Link>
               ))
             )}
           </CardContainer>
