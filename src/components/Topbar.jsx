@@ -3,6 +3,8 @@ import Navbar from "./Navbar";
 import styled from "styled-components";
 import MovieDetails from "./MovieDetails";
 import { mobile } from "../responsive";
+import backgroundImg1 from "../media/coverImg.jpg";
+import backgroundImg2 from "../media/coverImg2.jpeg";
 
 const Container = styled.div`
   width: 100%;
@@ -10,12 +12,12 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url("/media/coverImg.jpg");
+  background-image: url(${backgroundImg1});
   background-size: cover;
   color: white;
 
   ${mobile({
-    backgroundImage: "url('/media/coverImg2.jpeg')",
+    backgroundImage: `url(${backgroundImg2})`,
     backgroundSize: "cover",
   })}
 `;
