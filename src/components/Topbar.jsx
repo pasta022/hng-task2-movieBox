@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import styled from "styled-components";
 import MovieDetails from "./MovieDetails";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100%;
@@ -12,6 +13,11 @@ const Container = styled.div`
   background-image: url("/media/coverImg.jpg");
   background-size: cover;
   color: white;
+
+  ${mobile({
+    backgroundImage: "url('/media/coverImg2.jpeg')",
+    backgroundSize: "cover",
+  })}
 `;
 
 const Container2 = styled.div`

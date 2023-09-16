@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import { Circle, PlayCircleFilledWhiteTwoTone } from "@mui/icons-material";
 import Error from "./Error";
+import { mobile } from "../responsive";
 
 const Div = styled.div`
   margin: 0;
@@ -14,6 +15,10 @@ const MovieContainer = styled.div``;
 
 const Container = styled.div`
   padding: 20px;
+
+  ${mobile({
+    marginTop: "70px",
+  })}
 `;
 
 const Trailer = styled.div`
@@ -47,6 +52,10 @@ const Details = styled.div`
   margin: 10px 0 30px 0;
   font-size: 20px;
   color: #3c3c3c;
+
+  ${mobile({
+    fontSize: "15px",
+  })}
 `;
 
 const Title = styled.div`
@@ -82,6 +91,8 @@ const Movie = () => {
   const [movie, setMovie] = useState(null);
   const [tmdbMovie, setTmbdMovie] = useState(null);
   const [error, setError] = useState(false);
+  const [releaseDate, setReleaseDate] = useState("");
+  const [utcDate, setUtcDate] = useState("");
 
   //api info
   const apiKey = "3685919de6d6123451bc68adcb6632df";
@@ -130,6 +141,27 @@ const Movie = () => {
     }
   }, [movie]);
 
+  useEffect(() => {
+    if (movie) {
+      const getUTCTime = () => {
+        setReleaseDate(movie.release_date);
+        const dates = releaseDate.split("-");
+
+        if (dates.length === 3) {
+          const year = parseInt(dates[0]);
+          const month = parseInt(dates[1] - 1);
+          const day = parseInt(dates[2]);
+
+          const date = new Date(Date.UTC(year, month, day));
+
+          setUtcDate(date.toISOString());
+        }
+      };
+
+      getUTCTime();
+    }
+  }, [movie, releaseDate]);
+
   return (
     <>
       <Div>
@@ -157,7 +189,7 @@ const Movie = () => {
                     <Title data-testid="movie-title">{movie.title}</Title>
                     <Circle sx={{ fontSize: 10 }} htmlColor="grey" />
                     <ReleaseDate data-testid="movie-release-date">
-                      {movie.release_date}
+                      {utcDate}
                     </ReleaseDate>
                     <Circle sx={{ fontSize: 10 }} htmlColor="grey" />
                     {tmdbMovie && (

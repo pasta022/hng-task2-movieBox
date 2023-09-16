@@ -3,10 +3,16 @@ import styled from "styled-components";
 import imdb from "../assets/imdb.svg";
 import tomato from "../assets/tomato.svg";
 import youtube from "../assets/youtube.svg";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 30%;
   margin: 30px 0 150px 0;
+
+  ${mobile({
+    width: "100%",
+    marginTop: "60px",
+  })}
 `;
 
 const Title = styled.h1``;

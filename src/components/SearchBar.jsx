@@ -6,6 +6,7 @@ import Result from "./Result";
 import { Link } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
 import Error from "./Error";
+import { mobile } from "../responsive";
 
 // const Container = styled.div`
 //   width: 100%;
@@ -52,12 +53,17 @@ const ResultsDropDown = styled.div`
   left: 50%;
   transform: translateX(-50%);
   background-color: #fff;
-  z-index: 999;
+  z-index: 9999;
   color: black;
   margin: 10px 0 0 0;
   border: 1px solid #ccc;
   overflow-y: auto;
   border-radius: 20px;
+
+  ${mobile({
+    width: "100vw",
+    zIndex: "9999",
+  })}
 `;
 
 // const Loader = styled.div`
@@ -126,6 +132,13 @@ const SearchBar = () => {
     setDropDown(false);
   };
 
+  //handle button down
+  // const handleEnterKey = (e) => {
+  //   if (e.key === "Enter") {
+  //     handleButtonClick();
+  //   }
+  // };
+
   useEffect(() => {
     //occurs when button is clicked
     if (buttonClicked) {
@@ -159,7 +172,7 @@ const SearchBar = () => {
         }
       };
 
-      getMovie();
+      query ? getMovie() : setError(true);
 
       setTimeout(() => setButtonClicked(false), 2000);
     }
